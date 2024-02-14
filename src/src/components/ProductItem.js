@@ -8,18 +8,19 @@ import {
   Dimensions,
   SafeAreaView,
 } from 'react-native';
-import {useCart} from './Context/CartContext';
+import {connect, useDispatch} from 'react-redux';
+import {addToCart, removeFromCart} from './Reducer/Actions/ReducerActions';
 
 const {width, height} = Dimensions.get('window');
 const ProductItem = ({product}) => {
-  const {addToCart, removeFromCart} = useCart();
+  const dispatch = useDispatch();
   const [addedToCart, setAddedToCart] = useState(false);
 
   const handleToggleCart = () => {
     if (!addedToCart) {
-      addToCart(product);
+      dispatch(addToCart(product));
     } else {
-      removeFromCart(product.id);
+      dispatch(removeFromCart(product.id));
     }
     setAddedToCart(!addedToCart);
   };
@@ -70,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductItem;
+export default connect(null, {addToCart})(ProductItem);

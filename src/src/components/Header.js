@@ -1,22 +1,24 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useCart} from './Context/CartContext';
 import {Icon} from '@rneui/themed';
 import {Badge} from '@rneui/themed';
+import {connect} from 'react-redux';
 
-const Header = () => {
-  const {cartItems} = useCart();
-
+const Header = ({cartItems, navigation}) => {
   return (
     <View style={styles.header}>
       <Icon
         type="font-awesome"
         name="arrow-left"
         size={24}
-        // onPress={() => navigation.goBack()}
+        onPress={() => navigation.goBack()}
       />
       <View>
-        <Icon name="shopping-cart" size={40} />
+        <Icon
+          name="shopping-cart"
+          size={40}
+          onPress={() => navigation.navigate('CartScreen')}
+        />
         <Badge
           status="primary"
           containerStyle={styles.Badge}
@@ -26,6 +28,10 @@ const Header = () => {
     </View>
   );
 };
+
+const mapStateToProps = state => ({
+  cartItems: state.cart.cartItems,
+});
 
 const styles = StyleSheet.create({
   header: {
@@ -41,4 +47,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Header;
+export default connect(mapStateToProps)(Header);

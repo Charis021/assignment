@@ -8,7 +8,9 @@ import {useEffect, useState, useContext} from 'react';
 import {MyContext} from '../Context/Context';
 import FlatHome from '../../src/Screens/FlatHome';
 import Horizontal from '../../src/Screens/Horizontal';
-import Vertical from "../../src/Screens/Vertical"
+import Vertical from '../../src/Screens/Vertical';
+import CartScreen from '../../src/Screens/CartScreen';
+
 const Stack = createNativeStackNavigator();
 
 const Navigator = () => {
@@ -48,6 +50,11 @@ const Navigator = () => {
               name="Vertical"
               options={{headerShown: false}}
               component={Vertical}
+            />
+            <Stack.Screen
+              name="CartScreen"
+              options={{headerShown: false}}
+              component={CartScreen}
             />
           </>
         ) : (
