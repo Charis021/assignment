@@ -5,12 +5,11 @@ export const MyContext = createContext();
 
 const AuthContext = ({children}) => {
   const [user, setUser] = useState(null);
-
-  const getUser = async () => {
-    const data = AsyncStorage.getItem('userData');
-    setUser(data);
-  };
   useEffect(() => {
+    const getUser = async () => {
+      const data = JSON.parse(await AsyncStorage.getItem('loggedInUser'));
+      setUser(data);
+    };
     getUser();
   }, []);
 

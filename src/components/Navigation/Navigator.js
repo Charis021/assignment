@@ -3,36 +3,53 @@ import {NavigationContainer} from '@react-navigation/native';
 import SignupForm from '../screens/Formik';
 import Home from '../screens/Home';
 import LoginForm from '../screens/Login';
-import {useContext, useState, useEffect} from 'react';
-import {MyContext} from '../Context/Context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {useEffect, useState, useContext} from 'react';
+import {MyContext} from '../Context/Context';
+import FlatHome from '../../src/Screens/FlatHome';
+import Horizontal from '../../src/Screens/Horizontal';
+import Vertical from "../../src/Screens/Vertical"
 const Stack = createNativeStackNavigator();
 
 const Navigator = () => {
-  // const {user} = useContext(MyContext);
-  const [data, setData] = useState(false);
-  const getUser = () => {
-    const data = AsyncStorage.getItem('userData');
-    if (data) {
-      setData(true);
-    } else {
-      setData(false);
-    }
+  const [userData, setUserData] = useState(null);
+  const {user} = useContext(MyContext);
+
+  const getData = async () => {
+    const data = JSON.parse(await AsyncStorage.getItem('loggedInUser'));
+    setUserData(data);
   };
+
   useEffect(() => {
-    getUser();
-  }, []);
-  console.log(data);
+    getData();
+    console.log(user);
+  }, [user]);
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LogIn">
-        {data ? (
-          <Stack.Screen
-            name="Home"
-            options={{headerShown: false}}
-            component={Home}
-          />
+      <Stack.Navigator>
+        {userData ? (
+          <>
+            <Stack.Screen
+              name="Home"
+              options={{headerShown: false}}
+              component={Home}
+            />
+            <Stack.Screen
+              name="FlatHome"
+              options={{headerShown: false}}
+              component={FlatHome}
+            />
+            <Stack.Screen
+              name="Horizontal"
+              options={{headerShown: false}}
+              component={Horizontal}
+            />
+            <Stack.Screen
+              name="Vertical"
+              options={{headerShown: false}}
+              component={Vertical}
+            />
+          </>
         ) : (
           <>
             <Stack.Screen

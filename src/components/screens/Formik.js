@@ -17,12 +17,11 @@ import {MyContext} from '../Context/Context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignupForm = ({navigation}) => {
-  const {user, setUser} = useContext(MyContext);
+  const {setUser} = useContext(MyContext);
   const handleSubmit = async (initialValues, {resetForm}) => {
     await AsyncStorage.setItem('userData', JSON.stringify(initialValues));
-    // setUser(initialValues);
-    navigation.navigate('Home');
-
+    await AsyncStorage.setItem('loggedInUser', JSON.stringify(initialValues));
+    setUser(initialValues);
     Alert.alert('Success', 'SignUp successful');
 
     resetForm();

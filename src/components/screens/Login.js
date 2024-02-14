@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   View,
   Text,
@@ -6,13 +6,12 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ScrollView} from 'react-native-gesture-handler';
 import {MyContext} from '../Context/Context';
-import {useContext} from 'react';
 
 const validationSchema = yup.object().shape({
   email: yup
@@ -23,22 +22,19 @@ const validationSchema = yup.object().shape({
 });
 
 const LoginForm = ({navigation}) => {
-  // const {user, setUser} = useContext(MyContext);
-  // console.log(user);
+  const {user, setUser} = useContext(MyContext);
   const handleLogin = async (values, {resetForm}) => {
     try {
       const storedUser = JSON.parse(await AsyncStorage.getItem('userData'));
 
       if (storedUser.email !== values.email) {
-        Alert.alert('User does not exist. Please Sign Up');
+        Alert.alert( 'ERROR', 'User does not exist. Please Sign Up!');
       } else if (storedUser.password !== values.password) {
         Alert.alert('Incorrect password');
       } else {
-        console.log('Login successful:', storedUser);
+        await AsyncStorage.setItem('loggedInUser', JSON.stringify(storedUser));
+        setUser(storedUser);
         Alert.alert('Login successful', 'You are now logged in!');
-        // await AsyncStorage.setItem('currentUser', "true");
-        // setUser(storedUser);
-        navigation.navigate('Home');
         resetForm();
       }
     } catch (error) {

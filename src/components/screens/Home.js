@@ -1,18 +1,29 @@
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import Header from '../common/Header';
 import {MyContext} from '../Context/Context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 
-const Home = () => {
-  const navigation = useNavigation();
-  const {setUser} = useContext(MyContext);
+const Home = ({navigation}) => {
+  const {user, setUser} = useContext(MyContext);
   const [userData, setUserData] = useState();
 
+  const showList = () => {
+    navigation.navigate('FlatHome');
+  };
+
   const handleLogOut = async () => {
-    await AsyncStorage.setItem('userData', 'false');
-    window.location.href = 'LogIn';
+    await AsyncStorage.removeItem('loggedInUser');
+    setUser(null);
+    Alert.alert('Attention!', 'User is now Logged Out!');
   };
 
   const getData = async () => {
@@ -22,7 +33,6 @@ const Home = () => {
   useEffect(() => {
     getData();
   }, []);
-  // console.log(userData);
   return (
     <View style={styles.body}>
       <Header title={'Home'} showBackButton={false} />
@@ -39,6 +49,9 @@ const Home = () => {
         <Text style={styles.input}>Email: {userData?.email}</Text>
         <TouchableOpacity style={styles.button} onPress={handleLogOut}>
           <Text style={{color: '#ffffff', fontSize: 17}}>Log Out</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={showList}>
+          <Text style={{color: '#ffffff', fontSize: 17}}>Show FlatList</Text>
         </TouchableOpacity>
       </View>
     </View>
