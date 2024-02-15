@@ -5,6 +5,7 @@ import {Badge} from '@rneui/themed';
 import {connect} from 'react-redux';
 
 const Header = ({cartItems, navigation}) => {
+
   return (
     <View style={styles.header}>
       <Icon

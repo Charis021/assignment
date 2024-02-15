@@ -20,12 +20,15 @@ const CartScreen = () => {
   const handleRemoveFromCart = productId => {
     dispatch(removeFromCart(productId));
   };
+
+
+
   return (
     <View>
       <Text style={styles.text}>Cart:</Text>
       {cartItems?.map((item, index) => (
         <View key={item.id} style={styles.container}>
-          <Text style={styles.number}>{index+1}</Text>
+          <Text style={styles.number}>{index + 1}</Text>
           <Image style={styles.Images} source={{uri: item.download_url}} />
           <TouchableOpacity
             style={styles.button}
@@ -69,7 +72,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 18,
   },
-  number:{
+  number: {
     fontSize: 18,
-  }
+  },
 });

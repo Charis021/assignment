@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -8,11 +8,12 @@ import {
   Dimensions,
   SafeAreaView,
 } from 'react-native';
-import {connect, useDispatch} from 'react-redux';
+import {connect, useSelector, useDispatch} from 'react-redux';
 import {addToCart, removeFromCart} from './Reducer/Actions/ReducerActions';
 
 const {width, height} = Dimensions.get('window');
 const ProductItem = ({product}) => {
+  const cartItems = useSelector(state => state.cart.cartItems);
   const dispatch = useDispatch();
   const [addedToCart, setAddedToCart] = useState(false);
 
@@ -25,13 +26,16 @@ const ProductItem = ({product}) => {
     setAddedToCart(!addedToCart);
   };
 
+
   return (
     <SafeAreaView>
       <View style={styles.productItem}>
         <Image style={styles.Images} source={{uri: product.download_url}} />
         <TouchableOpacity style={styles.button} onPress={handleToggleCart}>
           <Text style={styles.buttonText}>
-            {addedToCart ? 'Remove from Cart' : 'Add to Cart'}
+            {cartItems.includes(product)
+              ? 'Remove from Cart'
+              : 'Add to Cart'}
           </Text>
         </TouchableOpacity>
       </View>
