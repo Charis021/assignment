@@ -19,8 +19,17 @@ const FlatHome = ({navigation}) => {
         onPress={() => navigation.navigate('Horizontal')}>
         Horizontal
       </Button>
-      <Button mode="contained" onPress={() => navigation.navigate('Vertical')}>
+      <Button
+        mode="contained"
+        style={{marginVertical: 10}}
+        onPress={() => navigation.navigate('Vertical')}>
         Vertical
+      </Button>
+      <Button
+        mode="contained"
+        style={{marginVertical: 10}}
+        onPress={() => navigation.navigate('FetchScreen')}>
+        Fetch Screen
       </Button>
     </View>
   );

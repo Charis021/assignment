@@ -10,6 +10,7 @@ import FlatHome from '../../src/Screens/FlatHome';
 import Horizontal from '../../src/Screens/Horizontal';
 import Vertical from '../../src/Screens/Vertical';
 import CartScreen from '../../src/Screens/CartScreen';
+import FetchScreen from '../../src/Screens/FetchScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,6 +56,11 @@ const Navigator = () => {
               name="CartScreen"
               options={{headerShown: false}}
               component={CartScreen}
+            />
+            <Stack.Screen
+              name="FetchScreen"
+              options={{headerShown: false}}
+              component={FetchScreen}
             />
           </>
         ) : (

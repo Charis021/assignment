@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: '#BC8F8F',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 10,
   },
   title: {
+    marginLeft: 10,
     fontSize: 20,
     fontWeight: '700',
     color: '#fff',
